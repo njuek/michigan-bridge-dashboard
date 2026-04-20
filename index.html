@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Michigan Bridge Infrastructure Dashboard 2021–2025</title>
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+
+  <header class="dash-header">
+    <div class="header-title">
+      <h1>Michigan Bridge Infrastructure</h1>
+      <p>Visual Analytics — NBI Data 2021–2025</p>
+    </div>
+    <div class="controls">
+      <div class="ctrl-group">
+        <label>Inspection Year</label>
+        <div class="slider-row">
+          <span class="slider-bound">2021</span>
+          <input type="range" id="year-slider" min="2021" max="2025" step="1" value="2025">
+          <span class="slider-bound">2025</span>
+        </div>
+        <span class="ctrl-value" id="year-val">2025</span>
+      </div>
+      <div class="ctrl-group">
+        <label>Condition</label>
+        <div class="btn-group" id="cond-filter">
+          <button class="cond-btn active" data-cond="all">All</button>
+          <button class="cond-btn good"   data-cond="G">Good</button>
+          <button class="cond-btn fair"   data-cond="F">Fair</button>
+          <button class="cond-btn poor"   data-cond="P">Poor</button>
+        </div>
+      </div>
+      <div class="ctrl-group" id="county-ctrl" style="visibility:hidden">
+        <label>County Filter</label>
+        <div class="county-row">
+          <span id="county-val">—</span>
+          <button id="clear-county" title="Clear county filter">✕</button>
+        </div>
+      </div>
+    </div>
+    <div id="loading-msg">Loading data…</div>
+  </header>
+
+  <main class="dashboard-grid" id="dashboard" style="visibility:hidden">
+
+    <div class="panel" id="panel-map">
+      <div class="panel-title">Bridge Risk by County <span class="subtitle">% Poor Bridges</span></div>
+      <svg id="chart-map" preserveAspectRatio="xMidYMid meet"></svg>
+    </div>
+
+    <div class="panel" id="panel-trends">
+      <div class="panel-title">Condition Trend 2021–2025 <span class="subtitle">% of Bridges</span></div>
+      <svg id="chart-trends" preserveAspectRatio="xMidYMid meet"></svg>
+    </div>
+
+    <div class="panel" id="panel-donut">
+      <div class="panel-title">Condition Breakdown</div>
+      <svg id="chart-donut" preserveAspectRatio="xMidYMid meet"></svg>
+    </div>
+
+    <div class="panel" id="panel-scatter">
+      <div class="panel-title">Bridge Age vs. Condition Rating <span class="subtitle">size = ADT traffic</span></div>
+      <svg id="chart-scatter" preserveAspectRatio="xMidYMid meet"></svg>
+    </div>
+
+    <div class="panel" id="panel-bar">
+      <div class="panel-title">Counties Ranked by % Poor Bridges</div>
+      <svg id="chart-bar" preserveAspectRatio="xMidYMid meet"></svg>
+    </div>
+
+    <div class="panel" id="panel-heatmap">
+      <div class="panel-title">Avg. Condition Rating — County × Year <span class="subtitle">Top 20 counties by bridge count</span></div>
+      <svg id="chart-heatmap" preserveAspectRatio="xMidYMid meet"></svg>
+    </div>
+
+  </main>
+
+  <!-- Shared tooltip -->
+  <div id="shared-tooltip" class="tooltip"></div>
+
+  <!-- D3 v7 + TopoJSON -->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://unpkg.com/topojson-client@3/dist/topojson-client.min.js"></script>
+
+  <!-- Chart modules (order matters: main.js must be last) -->
+  <script src="js/map.js"></script>
+  <script src="js/trends.js"></script>
+  <script src="js/donut.js"></script>
+  <script src="js/scatter.js"></script>
+  <script src="js/barchart.js"></script>
+  <script src="js/heatmap.js"></script>
+  <script src="js/main.js"></script>
+
+</body>
+</html>

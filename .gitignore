@@ -1,0 +1,10 @@
+# Raw source CSVs — large files; download from FHWA NBI portal to run preprocess.py
+Michigan bridges *.csv
+
+# bridges_all.json is 35 MB and not loaded at runtime by the dashboard
+data/bridges_all.json
+
+# Python cache
+__pycache__/
+*.pyc
+.env

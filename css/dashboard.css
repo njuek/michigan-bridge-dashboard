@@ -1,0 +1,190 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:       #0d1117;
+  --surface:  #161b22;
+  --border:   #21262d;
+  --accent:   #58a6ff;
+  --good:     #3fb950;
+  --fair:     #d29922;
+  --poor:     #f85149;
+  --muted:    #8b949e;
+  --text:     #c9d1d9;
+  --header-h: 72px;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ── Header ────────────────────────────────────────────── */
+.dash-header {
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  padding: 0 20px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+
+.header-title h1 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--accent);
+  white-space: nowrap;
+}
+.header-title p {
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  flex: 1;
+}
+
+.ctrl-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+}
+.ctrl-group label {
+  font-size: 0.65rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+
+.slider-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.slider-bound { font-size: 0.7rem; color: var(--muted); }
+
+#year-slider {
+  width: 110px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+.ctrl-value {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.btn-group { display: flex; gap: 4px; }
+.cond-btn {
+  padding: 3px 10px;
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 0.72rem;
+  transition: background .15s, color .15s, border-color .15s;
+}
+.cond-btn:hover { border-color: var(--accent); color: var(--text); }
+.cond-btn.active            { background: #21262d; color: var(--text); border-color: var(--accent); }
+.cond-btn.good.active       { background: var(--good);  border-color: var(--good);  color: #0d1117; }
+.cond-btn.fair.active       { background: var(--fair);  border-color: var(--fair);  color: #0d1117; }
+.cond-btn.poor.active       { background: var(--poor);  border-color: var(--poor);  color: #fff; }
+
+.county-row { display: flex; align-items: center; gap: 6px; }
+#county-val { font-size: 0.85rem; font-weight: 600; color: var(--accent); }
+#clear-county {
+  background: none; border: none; color: var(--poor); cursor: pointer;
+  font-size: 0.9rem; line-height: 1; padding: 0 2px;
+}
+#clear-county:hover { opacity: .7; }
+
+#loading-msg {
+  position: absolute;
+  right: 20px;
+  font-size: 0.75rem;
+  color: var(--muted);
+  animation: pulse 1.2s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100%{opacity:.4} 50%{opacity:1} }
+
+/* ── Dashboard grid ─────────────────────────────────────── */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 10px;
+  padding: 10px;
+  height: calc(100vh - var(--header-h));
+}
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px 8px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.panel-title {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  flex-shrink: 0;
+  margin-bottom: 4px;
+}
+.subtitle {
+  font-weight: 400;
+  color: #484f58;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 0.68rem;
+}
+
+.panel svg {
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+  display: block;
+}
+
+/* ── Shared tooltip ─────────────────────────────────────── */
+.tooltip {
+  position: fixed;
+  pointer-events: none;
+  background: #1c2128;
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 0.72rem;
+  line-height: 1.65;
+  max-width: 230px;
+  opacity: 0;
+  transition: opacity .12s;
+  z-index: 999;
+  color: var(--text);
+}
+.tooltip.show { opacity: 1; }
+.tooltip strong { display: block; color: var(--accent); margin-bottom: 2px; }
+
+/* ── D3 axis defaults ───────────────────────────────────── */
+.tick line { stroke: #21262d; }
+.tick text { fill: #8b949e; font-size: 10px; font-family: inherit; }
+.domain    { display: none; }
+.grid-line { stroke: #21262d; stroke-dasharray: 3 3; }
+.axis-lbl  { fill: #8b949e; font-size: 10px; }
+.legend-lbl { fill: #8b949e; font-size: 10px; }
