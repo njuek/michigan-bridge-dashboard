@@ -7,7 +7,7 @@ A single-page interactive D3.js dashboard that visualizes five years (2021–202
 
 ## Table of Contents
 
-1. [Live Demo / Running the Dashboard](#running-the-dashboard)
+1. [Running the Dashboard](#running-the-dashboard)
 2. [Project Overview](#project-overview)
 3. [Data](#data)
 4. [Visualizations](#visualizations)
@@ -21,34 +21,16 @@ A single-page interactive D3.js dashboard that visualizes five years (2021–202
 
 ## Running the Dashboard
 
-The dashboard fetches JSON files at runtime, so it **must be served over HTTP** — opening `index.html` directly as a `file://` URL will not work.
+To run the dashboard, you'll need to serve it through a local web server. This is because the dashboard loads JSON data files at runtime, and browsers block that when you open an HTML file directly. The quickest way to get it running is with Python's built-in server — no extra installations needed.
 
-### Option A — Local server (Python, recommended)
+Clone the repo, navigate into the folder, and run:
 
 ```bash
-# Navigate to the Final Project folder
-cd "path/to/Final Project"
-
-# Start server
+cd michigan-bridge-dashboard
 python -m http.server 8080
-
-# Open in browser
-http://localhost:8080
 ```
 
-Press `Ctrl+C` in the terminal to stop the server.
-
-### Option B — Share with a teammate
-
-Zip the entire **Final Project** folder and send it. The recipient unzips it, runs the Python command above, and visits `http://localhost:8080`. No installation required beyond Python 3.
-
-### Option C — Publish online (Netlify Drop)
-
-1. Go to **https://app.netlify.com/drop**
-2. Drag the entire **Final Project** folder onto the page
-3. A public URL is generated instantly (e.g., `https://random-name.netlify.app`)
-
-> **Tip:** You can safely delete `data/bridges_all.json` (35 MB) before uploading — the live dashboard only loads `bridges_2025.json` and `county_summary.json`. This reduces the upload size significantly.
+Then open your browser and go to `http://localhost:8080`. When you're done, press `Ctrl+C` in the terminal to shut it down.
 
 ---
 
